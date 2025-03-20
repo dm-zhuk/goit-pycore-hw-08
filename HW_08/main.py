@@ -14,16 +14,29 @@ from assist_bot import (
     parse_input,
 )
 from address_book import AddressBook
+import pickle
 
+
+def save_data(book, filename="addressbook.pkl"):
+    with open(filename, 'wb') as f:
+        pickle.dump(book, f)
+
+def load_data(filename="addressbook.pkl"):
+    try:
+        with open(filename, 'rb') as f:
+            return pickle.load(f)
+    except FileNotFoundError:
+        return AddressBook() # this would be a new AddressBook
 
 def main():
-    book = AddressBook()
+    book = load_data() # this will load the phonebook state
     print("Welcome to the assistant bot!")
     while True:
         name_input = input("Enter a command: ")
         command, args = parse_input(name_input)
 
         if command in ["close", "exit"]:
+            save_data(book) # this will save the phonebook state before bot closing
             print("Good bye!")
             break
         elif command == "hello":

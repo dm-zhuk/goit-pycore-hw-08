@@ -72,7 +72,7 @@ def change_contact(args, book: AddressBook):
 
 @input_error
 def delete_contact(args, book: AddressBook):
-    if len(args) != 1:
+    if len(args) < 1:
         raise ValueError("Please provide the name of the contact to delete.")
 
     name = " ".join(args)
@@ -81,7 +81,6 @@ def delete_contact(args, book: AddressBook):
         return f"Contact '{name}' has been deleted."
     except KeyError as e:
         return str(e)
-
 
 @input_error
 def show_phone(args, book: AddressBook):
